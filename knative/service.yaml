@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: inference-api
+spec:
+  template:
+    spec:
+      containers:
+        - image: dev.local/inference-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
