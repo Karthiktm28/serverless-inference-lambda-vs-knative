@@ -17,6 +17,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", default="benchmarks/knative_results.csv")
     ap.add_argument("--chart", default="benchmarks/knative_chart.png")
+    ap.add_argument("--title", default="Knative on Minikube: cold vs warm latency")
     args = ap.parse_args()
 
     groups = defaultdict(list)
@@ -40,7 +41,6 @@ def main():
             f"{stats[t]['p95']:>8.1f} {max(d):>8.1f} {statistics.mean(d):>8.1f}"
         )
 
-    # Chart: p50 and p95 for cold vs warm
     labels = list(stats.keys())
     x = range(len(labels))
     w = 0.35
@@ -52,7 +52,7 @@ def main():
     ax.set_xticks(list(x))
     ax.set_xticklabels(labels)
     ax.set_ylabel("Latency (ms)")
-    ax.set_title("Knative on Minikube: cold vs warm latency")
+    ax.set_title(args.title)
     ax.legend()
     fig.tight_layout()
     fig.savefig(args.chart, dpi=150)
